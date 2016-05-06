@@ -46,7 +46,7 @@ class HttpSimulation2 extends Simulation {
         .exec(
             http("GET to base URL")
                 .get("/"))
-        .pause(5 seconds)
+        .pace(4 seconds)
         .exec(
             http("GET to /computers")
                 .get("/computers"))

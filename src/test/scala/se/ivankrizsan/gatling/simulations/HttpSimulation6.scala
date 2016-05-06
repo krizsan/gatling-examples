@@ -42,7 +42,8 @@ class HttpSimulation6 extends Simulation {
                  * and the simulation will thus succeed.
                  */
                 .check(
-                    status.is(404)
+                    status.is(404),
+                    regex("Action not found").count.is(2)
                 )
         )
 
@@ -55,7 +56,9 @@ class HttpSimulation6 extends Simulation {
          * If this is not the case when the simulation runs, the simulation will considered to have failed.
          */
         .assertions(
-            global.responseTime.max.lessThan(200)
+            global.responseTime.max.lessThan(500),
+            forAll.failedRequests.count.lessThan(5),
+            details("Bad Request").successfulRequests.percent.greaterThan(90)
         )
         .protocols(theHttpProtocolBuilder)
 }

@@ -40,9 +40,9 @@ class HttpSimulation7 extends Simulation {
                 /* Several checks on the response can be specified. */
                 .check(
                     /* Check that the HTTP status returned is 200 or 201. */
-                    status.find.in(200, 201),
+                    status.find.in(200, 202),
                     /* Check that there is at least one match of the supplied regular expression in the response body. */
-                    regex(".*Computer database.*")
+                    regex("Computer database").count.greaterThanOrEqual(1)
             )
         )
 

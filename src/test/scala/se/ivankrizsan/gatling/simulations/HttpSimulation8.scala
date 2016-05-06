@@ -15,6 +15,8 @@
  */
 package se.ivankrizsan.gatling.simulations
 
+import se.ivankrizsan.gatling.common.HttpSimulationBaseClass
+
 import scala.concurrent.duration._
 
 /**

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.ivankrizsan.gatling.simulations
+package se.ivankrizsan.gatling.common
 
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
