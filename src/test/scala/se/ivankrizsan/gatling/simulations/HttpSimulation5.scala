@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Ivan Krizsan
+ * Copyright 2016-2020 Ivan Krizsan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@ package se.ivankrizsan.gatling.simulations
 
 import io.gatling.core.Predef._
 import io.gatling.core.body.Body
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 
 /**
   * Example Gatling load test that sends one HTTP POST requests to a URL.
@@ -26,14 +28,14 @@ import io.gatling.http.Predef._
   * Two URL parameters, "login" and "password", are passed in the URL of the request.
   * Note that this simulation should fail, since a non-expected HTTP status code should be returned.
   * Run this simulation with:
-  * mvn -Dgatling.simulation.name=HttpSimulation5 gatling:execute
+  * mvn -Dgatling.simulation.name=HttpSimulation5 gatling:test
   *
   * @author Ivan Krizsan
   */
 class HttpSimulation5 extends Simulation {
 
-    val theHttpProtocolBuilder = http
-        .baseURL("http://computer-database.gatling.io")
+    val theHttpProtocolBuilder: HttpProtocolBuilder = http
+        .baseUrl("http://computer-database.gatling.io")
         .acceptHeader("application/xml, text/html, text/plain, application/json, */*")
         .acceptCharsetHeader("UTF-8")
         .acceptEncodingHeader("gzip, deflate")
@@ -44,7 +46,7 @@ class HttpSimulation5 extends Simulation {
 
     val theBody : Body = StringBody("Farty Towels!")
 
-    val theScenarioBuilder = scenario("Scenario1")
+    val theScenarioBuilder: ScenarioBuilder = scenario("Scenario1")
         .exec(
             http("Login and Post Data")
                 .post("/computers")

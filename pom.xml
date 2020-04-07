@@ -1,5 +1,5 @@
 <!--
-    Copyright 2016 Ivan Krizsan
+    Copyright 2016-2020 Ivan Krizsan
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,27 +18,27 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>se.ivankrizsan.gatling</groupId>
     <artifactId>gatling-examples</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
 
     <properties>
         <!-- JDK version used for the project. -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <encoding>UTF-8</encoding>
         <!-- Scala version used for the project. Must match the version used by Gatling. -->
         <scala.version>2.12.3</scala.version>
         <scala.compat.version>2.12</scala.compat.version>
         <!-- Gatling version and Gatling Maven plug-in version. -->
-        <gatling.version>2.3.0</gatling.version>
-        <gatling-plugin.version>2.2.4</gatling-plugin.version>
+        <gatling.version>3.3.1</gatling.version>
+        <gatling-plugin.version>3.0.5</gatling-plugin.version>
         <!--
             The first property specifies the package in which the Gatling simulations are found.
             The second property specifies the Gatling simulation that is to be run.
             Both these properties can be overridden when running a simulation with Maven.
             This example will run the simulation with name HttpSimulation3 in the default simulations package:
-            mvn -Dgatling.simulation.name=HttpSimulation3 gatling:execute
+            mvn -Dgatling.simulation.name=HttpSimulation3 gatling:test
         -->
         <gatling.simulations.package>se.ivankrizsan.gatling.simulations</gatling.simulations.package>
         <gatling.simulation.name>HttpSimulation1</gatling.simulation.name>

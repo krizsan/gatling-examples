@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Ivan Krizsan
+ * Copyright 2016-2020 Ivan Krizsan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,30 +32,20 @@ import scala.concurrent.duration._
   */
 abstract class HttpSimulationBaseClass extends Simulation {
     /* Base URL of requests sent in scenario 1. */
-    var scenario1BaseURL = ""
+    protected var scenario1BaseURL = ""
     /* Additional request path appended after the base URL in scenario 1. */
-    var scenario1RequestPath = ""
+    protected var scenario1RequestPath = ""
     /* Final number of users in the simulation. */
-    var finalUserCount = 10
+    protected var finalUserCount = 10
     /* Time period after which the number of users is to reach the final number of users. */
-    var userCountRampUpTime : FiniteDuration = (20 seconds)
-
-    /*
-     * Performs initialization of the simulation before it is executed.
-     * Initialization must be performed this way in order to allow for subclasses to
-     * modify instance variables and for those modifications to affect the resulting
-     * simulation configuration.
-     */
-    before {
-        doSetUp()
-    }
+    protected var userCountRampUpTime : FiniteDuration = (20 seconds)
 
     /**
       * Creates the HTTP protocol builder used in the simulation.
       */
     def createHttpProtocolBuilder(): HttpProtocolBuilder = {
         val httpProtocolBuilder = http
-            .baseURL(scenario1BaseURL)
+            .baseUrl(scenario1BaseURL)
             .acceptHeader("text/plain")
             .userAgentHeader("Gatling")
         httpProtocolBuilder
@@ -75,13 +65,16 @@ abstract class HttpSimulationBaseClass extends Simulation {
 
     /**
       * Performs setup of the simulation.
+      * Needs to be called from the constructor of child classes, after the instance
+      * variables have been initialized, in order to create a scenario using the instance
+      * variable values of the child classes.
       */
     def doSetUp(): Unit = {
         val theScenarioBuilder = createScenarioBuilder()
         val theHttpProtocolBuilder = createHttpProtocolBuilder()
 
         setUp(
-            theScenarioBuilder.inject(rampUsers(finalUserCount).over(userCountRampUpTime))
+            theScenarioBuilder.inject(rampUsers(finalUserCount).during(userCountRampUpTime))
         ).protocols(theHttpProtocolBuilder)
     }
 }

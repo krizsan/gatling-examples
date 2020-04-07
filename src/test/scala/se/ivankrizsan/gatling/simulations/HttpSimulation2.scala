@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Ivan Krizsan
+ * Copyright 2016-2020 Ivan Krizsan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package se.ivankrizsan.gatling.simulations
 
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import io.gatling.http.request.builder.HttpRequestBuilder.toActionBuilder
 
 import scala.concurrent.duration._
@@ -26,14 +28,14 @@ import scala.concurrent.duration._
   * The first request will be redirected, again making it look like there were two requests sent.
   * The second request will not be redirected.
   * Run this simulation with:
-  * mvn -Dgatling.simulation.name=HttpSimulation2 gatling:execute
+  * mvn -Dgatling.simulation.name=HttpSimulation2 gatling:test
   *
   * @author Ivan Krizsan
   */
 class HttpSimulation2 extends Simulation {
 
-    val theHttpProtocolBuilder = http
-        .baseURL("http://computer-database.gatling.io")
+    val theHttpProtocolBuilder: HttpProtocolBuilder = http
+        .baseUrl("http://computer-database.gatling.io")
 
     /*
      * This scenario consists of two GET requests; one to the base URL and one to /computers relative
@@ -42,7 +44,7 @@ class HttpSimulation2 extends Simulation {
      * Note that in order to get access to different durations, we must add the following import:
      * import scala.concurrent.duration._
      */
-    val theScenarioBuilder = scenario("Scenario1")
+    val theScenarioBuilder: ScenarioBuilder = scenario("Scenario1")
         .exec(
             http("GET to base URL")
                 .get("/"))

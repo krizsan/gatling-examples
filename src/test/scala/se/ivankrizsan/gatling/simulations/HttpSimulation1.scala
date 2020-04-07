@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Ivan Krizsan
+ * Copyright 2016-2020 Ivan Krizsan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,16 @@
 package se.ivankrizsan.gatling.simulations
 
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import io.gatling.http.request.builder.HttpRequestBuilder.toActionBuilder
 
 /**
   * Example Gatling load test that sends one HTTP GET requests to a URL.
   * Note that the request is redirected and this causes the request count to become two.
   * Run this simulation with:
-  * mvn -Dgatling.simulation.name=HttpSimulation1 gatling:execute
+  * mvn -Dgatling.simulation.name=HttpSimulation1 gatling:test
   *
   * @author Ivan Krizsan
   */
@@ -42,8 +44,8 @@ class HttpSimulation1 extends Simulation {
      * A HTTP protocol builder is used to specify common properties of request(s) to be sent,
      * for instance the base URL, HTTP headers that are to be enclosed with all requests etc.
      */
-    val theHttpProtocolBuilder = http
-        .baseURL("http://computer-database.gatling.io")
+    val theHttpProtocolBuilder: HttpProtocolBuilder = http
+        .baseUrl("http://computer-database.gatling.io")
 
     /*
      * A scenario consists of one or more requests. For instance logging into a e-commerce
@@ -51,7 +53,7 @@ class HttpSimulation1 extends Simulation {
      * One simulation can contain many scenarios.
      */
     /* Scenario1 is a name that describes the scenario. */
-    val theScenarioBuilder = scenario("Scenario1")
+    val theScenarioBuilder: ScenarioBuilder = scenario("Scenario1")
         .exec(
             /* myRequest1 is a name that describes the request. */
             http("myRequest1")

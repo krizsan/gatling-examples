@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Ivan Krizsan
+ * Copyright 2016-2020 Ivan Krizsan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package se.ivankrizsan.gatling.simulations
 
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import io.gatling.http.request.builder.HttpRequestBuilder.toActionBuilder
 
 /**
@@ -25,15 +27,15 @@ import io.gatling.http.request.builder.HttpRequestBuilder.toActionBuilder
   * The response body is examined and the request is considered to have failed if the specified regular
   * expression is not matched.
   * Run this simulation with:
-  * mvn -Dgatling.simulation.name=HttpSimulation7 gatling:execute
+  * mvn -Dgatling.simulation.name=HttpSimulation7 gatling:test
   *
   * @author Ivan Krizsan
   */
 class HttpSimulation7 extends Simulation {
-    val theHttpProtocolBuilder = http
-        .baseURL("http://computer-database.gatling.io")
+    val theHttpProtocolBuilder: HttpProtocolBuilder = http
+        .baseUrl("http://computer-database.gatling.io")
 
-    val theScenarioBuilder = scenario("Scenario1")
+    val theScenarioBuilder: ScenarioBuilder = scenario("Scenario1")
         .exec(
             http("Request Computers List")
                 .get("/computers")
@@ -42,7 +44,7 @@ class HttpSimulation7 extends Simulation {
                     /* Check that the HTTP status returned is 200 or 201. */
                     status.find.in(200, 202),
                     /* Check that there is at least one match of the supplied regular expression in the response body. */
-                    regex("Computer database").count.greaterThanOrEqual(1)
+                    regex("Computer database").count.gte(1)
             )
         )
 

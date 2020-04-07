@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Ivan Krizsan
+ * Copyright 2016-2020 Ivan Krizsan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,25 @@
 package se.ivankrizsan.gatling.simulations
 
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import io.gatling.http.request.builder.HttpRequestBuilder.toActionBuilder
 
 /**
   * Example Gatling load test simulating ten users that each sends one single HTTP GET request.
   * All the users will start sending requests immediately when the simulation is started.
   * Run this simulation with:
-  * mvn -Dgatling.simulation.name=HttpSimulation3 gatling:execute
+  * mvn -Dgatling.simulation.name=HttpSimulation3 gatling:test
   *
   * @author Ivan Krizsan
   */
 class HttpSimulation3 extends Simulation {
 
-    val theHttpProtocolBuilder = http
-        .baseURL("http://computer-database.gatling.io")
+    val theHttpProtocolBuilder: HttpProtocolBuilder = http
+        .baseUrl("http://computer-database.gatling.io")
 
-    val theScenarioBuilder = scenario("Scenario1")
+    val theScenarioBuilder: ScenarioBuilder = scenario("Scenario1")
         .exec(
             http("myRequest1")
                 .get("/computers"))
